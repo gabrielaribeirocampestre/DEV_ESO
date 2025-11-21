@@ -53,6 +53,9 @@ let AuthService = class AuthService {
         this.jwt = jwt;
     }
     async login(dto) {
+        if (!dto.email || !dto.password) {
+            throw new common_1.UnauthorizedException('Email e senha são obrigatórios');
+        }
         const user = await this.users.findByEmail(dto.email);
         if (!user)
             throw new common_1.UnauthorizedException('Invalid credentials');
@@ -63,6 +66,8 @@ let AuthService = class AuthService {
         return { token, user };
     }
     async register(dto) {
+        if (!dto.password)
+            throw new common_1.UnauthorizedException('Password is required');
         const passwordHash = await argon2.hash(dto.password);
         const newUser = await this.users.create({
             ...dto,

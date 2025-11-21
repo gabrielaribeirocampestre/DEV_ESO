@@ -1,4 +1,3 @@
-
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -11,10 +10,14 @@ export class AuthService {
   constructor(private users: UsersService, private jwt: JwtService) {}
 
   async login(dto: LoginDto) {
-    const user = await this.users.findByEmail(dto.email);
+    if (!dto.email || !dto.password) {
+      throw new UnauthorizedException('Email e senha são obrigatórios');
+    }
+
+    const user = await this.users.findByEmail(dto.email!);
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const valid = await argon2.verify(user.password, dto.password);
+    const valid = await argon2.verify(user.password!, dto.password!);
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
     const token = await this.jwt.signAsync({ sub: user.id });
@@ -22,11 +25,15 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const passwordHash = await argon2.hash(dto.password);
+    if (!dto.password) throw new UnauthorizedException('Password is required');
+
+    const passwordHash = await argon2.hash(dto.password!);
+
     const newUser = await this.users.create({
       ...dto,
       password: passwordHash,
     });
+
     const token = await this.jwt.signAsync({ sub: newUser.id });
     return { token, user: newUser };
   }
