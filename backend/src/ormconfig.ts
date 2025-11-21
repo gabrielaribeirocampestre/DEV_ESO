@@ -1,8 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { User } from '../users/user.entity';
-import { Cosmetic } from '../cosmetics/cosmetic.entity';
-import { UserCosmetic } from '../shop/user-cosmetic.entity';
-import { Transaction } from '../shop/transaction.entity';
+import { User } from './users/user.entity';
+import { Cosmetic } from './cosmetics/cosmetic.entity';
+import { UserCosmetic } from './shop/user-cosmetic.entity';
+import { Transaction } from './shop/transaction.entity';
 
 export const ormconfig: TypeOrmModuleOptions = {
   type: 'postgres',
