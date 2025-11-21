@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: cosmetics_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=prodsecret
+      - DB_PATH=/app/database.sqlite
+    volumes:
+      - api_data:/app
+
+volumes:
+  api_data:
