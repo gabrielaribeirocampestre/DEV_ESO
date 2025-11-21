@@ -8,29 +8,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SyncService = void 0;
+exports.CosmeticsService = void 0;
 const common_1 = require("@nestjs/common");
-const fortnite_api_service_1 = require("./fortnite-api.service");
-const cosmetics_service_1 = require("../cosmetics/cosmetics.service");
-let SyncService = class SyncService {
-    constructor(fortniteApi, cosmetics) {
-        this.fortniteApi = fortniteApi;
-        this.cosmetics = cosmetics;
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const cosmetic_entity_1 = require("./cosmetic.entity");
+let CosmeticsService = class CosmeticsService {
+    constructor(repo) {
+        this.repo = repo;
     }
-    async syncCosmetics() {
-        const data = await this.fortniteApi.getCosmetics();
-        await this.cosmetics.clear();
-        const imported = await this.cosmetics.bulkInsert(data);
-        return {
-            imported: imported.length,
-        };
+    async findAll() {
+        return this.repo.find();
+    }
+    async findOne(id) {
+        return this.repo.findOne({ where: { id } });
+    }
+    async clear() {
+        await this.repo.clear();
+    }
+    async bulkInsert(data) {
+        const entities = this.repo.create(data);
+        return this.repo.save(entities);
+    }
+    async create(dto) {
+        const entity = this.repo.create(dto);
+        return this.repo.save(entity);
     }
 };
-exports.SyncService = SyncService;
-exports.SyncService = SyncService = __decorate([
+exports.CosmeticsService = CosmeticsService;
+exports.CosmeticsService = CosmeticsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [fortnite_api_service_1.FortniteApiService,
-        cosmetics_service_1.CosmeticsService])
-], SyncService);
+    __param(0, (0, typeorm_1.InjectRepository)(cosmetic_entity_1.Cosmetic)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
+], CosmeticsService);
 //# sourceMappingURL=sync.service.js.map

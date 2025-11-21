@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { FortniteApiService } from './fortnite-api.service';
-import { CosmeticsService } from '../cosmetics/cosmetics.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Cosmetic } from './cosmetic.entity';
 
 @Injectable()
-export class SyncService {
+export class CosmeticsService {
   constructor(
-    private fortniteApi: FortniteApiService,
-    private cosmetics: CosmeticsService,
+    @InjectRepository(Cosmetic)
+    private repo: Repository<Cosmetic>,
   ) {}
 
-  async syncCosmetics() {
-    // 1. Baixar cosméticos da API real
-    const data = await this.fortniteApi.getCosmetics();
+  async findAll(): Promise<Cosmetic[]> {
+    return this.repo.find();
+  }
 
-    // 2. Limpar tabela existente
-    await this.cosmetics.clear();
+  async findOne(id: number): Promise<Cosmetic | null> {
+    return this.repo.findOne({ where: { id } });
+  }
 
-    // 3. Inserir novos
-    const imported = await this.cosmetics.bulkInsert(data);
+  async clear() {
+    await this.repo.clear();
+  }
 
-    return {
-      imported: imported.length,
-    };
+  async bulkInsert(data: Partial<Cosmetic>[]) {
+    const entities = this.repo.create(data);
+    return this.repo.save(entities);
+  }
+
+  async create(dto: Partial<Cosmetic>) {
+    const entity = this.repo.create(dto);
+    return this.repo.save(entity);
   }
 }
