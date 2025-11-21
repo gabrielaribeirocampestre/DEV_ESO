@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Cosmetic } from '../cosmetics/cosmetic.entity';
+import { Cosmetic } from '../cosmetic.entity';
 
 @Entity()
 export class ShopItem {
@@ -20,5 +20,5 @@ export class ShopItem {
   price?: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  date: Date; // indica a loja de qual dia é
+  date!: Date; // indica a loja de qual dia é
 }

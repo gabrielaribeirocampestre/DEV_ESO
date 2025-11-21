@@ -16,7 +16,7 @@ exports.ShopService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const shop_item_entity_1 = require("./shop-item.entity");
+const shop_item_entity_1 = require("../cosmetics/dto/shop-item.entity");
 const cosmetics_service_1 = require("../cosmetics/cosmetics.service");
 let ShopService = class ShopService {
     constructor(repo, cosmetics) {

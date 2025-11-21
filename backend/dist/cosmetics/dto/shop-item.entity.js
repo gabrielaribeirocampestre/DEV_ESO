@@ -8,11 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShopItem = void 0;
 const typeorm_1 = require("typeorm");
-const cosmetic_entity_1 = require("../cosmetics/cosmetic.entity");
+const cosmetic_entity_1 = require("../cosmetic.entity");
 let ShopItem = class ShopItem {
 };
 exports.ShopItem = ShopItem;
@@ -23,7 +22,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => cosmetic_entity_1.Cosmetic),
     (0, typeorm_1.JoinColumn)({ name: 'cosmeticId' }),
-    __metadata("design:type", typeof (_a = typeof cosmetic_entity_1.Cosmetic !== "undefined" && cosmetic_entity_1.Cosmetic) === "function" ? _a : Object)
+    __metadata("design:type", cosmetic_entity_1.Cosmetic)
 ], ShopItem.prototype, "cosmetic", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
