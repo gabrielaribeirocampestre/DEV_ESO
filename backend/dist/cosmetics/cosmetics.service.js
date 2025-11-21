@@ -31,6 +31,13 @@ let CosmeticsService = class CosmeticsService {
         const cosmetic = this.repo.create(data);
         return this.repo.save(cosmetic);
     }
+    async clear() {
+        await this.repo.clear();
+    }
+    async bulkInsert(data) {
+        const entities = this.repo.create(data);
+        return this.repo.save(entities);
+    }
 };
 exports.CosmeticsService = CosmeticsService;
 exports.CosmeticsService = CosmeticsService = __decorate([

@@ -10,16 +10,25 @@ export class CosmeticsService {
     private repo: Repository<Cosmetic>,
   ) {}
 
-  findAll() {
+  findAll(): Promise<Cosmetic[]> {
     return this.repo.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<Cosmetic | null> {
     return this.repo.findOne({ where: { id } });
   }
 
-  create(data: Partial<Cosmetic>) {
+  create(data: Partial<Cosmetic>): Promise<Cosmetic> {
     const cosmetic = this.repo.create(data);
     return this.repo.save(cosmetic);
+  }
+
+  async clear(): Promise<void> {
+    await this.repo.clear();
+  }
+
+  async bulkInsert(data: Partial<Cosmetic>[]): Promise<Cosmetic[]> {
+    const entities = this.repo.create(data);
+    return this.repo.save(entities);
   }
 }
