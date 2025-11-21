@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ShopItem } from '../cosmetics/dto/shop-item.entity';
 import { CosmeticsService } from '../cosmetics/cosmetics.service';
+import { Cosmetic } from '../cosmetics/cosmetic.entity';
 
 @Injectable()
 export class ShopService {
@@ -12,26 +13,27 @@ export class ShopService {
     private cosmetics: CosmeticsService,
   ) {}
 
-  async create(dto: any) {
+  async create(dto: { cosmeticId: number; price?: number; featured?: boolean }): Promise<ShopItem> {
     const cosmetic = await this.cosmetics.findOne(dto.cosmeticId);
     if (!cosmetic) throw new NotFoundException('Cosmetic not found');
 
     const shopItem = this.repo.create({
-      ...dto,
+      cosmeticId: dto.cosmeticId,
       price: dto.price ?? cosmetic.price,
+      featured: dto.featured ?? false,
     });
 
     return this.repo.save(shopItem);
   }
 
   // Gera loja do dia automaticamente
-  async generateDailyShop(totalItems: number, featuredItems: number) {
-    const cosmetics = await this.cosmetics.findAll(1, 9999);
-
-    if (cosmetics.total < totalItems)
+  async generateDailyShop(totalItems: number, featuredItems: number): Promise<ShopItem[]> {
+    const cosmetics: Cosmetic[] = await this.cosmetics.findAll(); // sem argumentos
+    if (cosmetics.length < totalItems + featuredItems)
       throw new Error('Not enough cosmetics to generate the shop');
 
-    const shuffled = cosmetics.items.sort(() => Math.random() - 0.5);
+    // embaralha
+    const shuffled = [...cosmetics].sort(() => Math.random() - 0.5);
 
     const main = shuffled.slice(0, totalItems);
     const featured = shuffled.slice(totalItems, totalItems + featuredItems);
@@ -61,22 +63,19 @@ export class ShopService {
     return created;
   }
 
-  async getTodayShop() {
-    // pega as últimas 24h
-    const today = await this.repo.find({
+  async getTodayShop(): Promise<ShopItem[]> {
+    return this.repo.find({
       relations: ['cosmetic'],
       order: { id: 'DESC' },
       take: 100,
     });
-
-    return today;
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<ShopItem | null> {
     return this.repo.findOne({ where: { id }, relations: ['cosmetic'] });
   }
 
-  async delete(id: number) {
-    return this.repo.delete(id);
+  async delete(id: number): Promise<void> {
+    await this.repo.delete(id);
   }
 }

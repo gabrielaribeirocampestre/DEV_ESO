@@ -2,11 +2,11 @@ import { IsBoolean, IsNumber } from 'class-validator';
 
 export class CreateShopItemDto {
   @IsNumber()
-  cosmeticId: number;
+  cosmeticId?: number;
 
   @IsNumber()
-  price: number;
+  price?: number;
 
   @IsBoolean()
-  featured: boolean;
+  featured?: boolean;
 }

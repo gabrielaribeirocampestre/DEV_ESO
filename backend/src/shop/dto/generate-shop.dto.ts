@@ -2,8 +2,8 @@ import { IsNumber } from 'class-validator';
 
 export class GenerateShopDto {
   @IsNumber()
-  totalItems: number;
+  totalItems?: number;
 
   @IsNumber()
-  featuredItems: number;
+  featuredItems?: number;
 }

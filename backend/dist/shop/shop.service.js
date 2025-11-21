@@ -24,21 +24,22 @@ let ShopService = class ShopService {
         this.cosmetics = cosmetics;
     }
     async create(dto) {
-        var _a;
+        var _a, _b;
         const cosmetic = await this.cosmetics.findOne(dto.cosmeticId);
         if (!cosmetic)
             throw new common_1.NotFoundException('Cosmetic not found');
         const shopItem = this.repo.create({
-            ...dto,
+            cosmeticId: dto.cosmeticId,
             price: (_a = dto.price) !== null && _a !== void 0 ? _a : cosmetic.price,
+            featured: (_b = dto.featured) !== null && _b !== void 0 ? _b : false,
         });
         return this.repo.save(shopItem);
     }
     async generateDailyShop(totalItems, featuredItems) {
-        const cosmetics = await this.cosmetics.findAll(1, 9999);
-        if (cosmetics.total < totalItems)
+        const cosmetics = await this.cosmetics.findAll();
+        if (cosmetics.length < totalItems + featuredItems)
             throw new Error('Not enough cosmetics to generate the shop');
-        const shuffled = cosmetics.items.sort(() => Math.random() - 0.5);
+        const shuffled = [...cosmetics].sort(() => Math.random() - 0.5);
         const main = shuffled.slice(0, totalItems);
         const featured = shuffled.slice(totalItems, totalItems + featuredItems);
         const created = [];
@@ -59,18 +60,17 @@ let ShopService = class ShopService {
         return created;
     }
     async getTodayShop() {
-        const today = await this.repo.find({
+        return this.repo.find({
             relations: ['cosmetic'],
             order: { id: 'DESC' },
             take: 100,
         });
-        return today;
     }
     async findOne(id) {
         return this.repo.findOne({ where: { id }, relations: ['cosmetic'] });
     }
     async delete(id) {
-        return this.repo.delete(id);
+        await this.repo.delete(id);
     }
 };
 exports.ShopService = ShopService;

@@ -20,7 +20,7 @@ let FortniteApiService = class FortniteApiService {
     async getCosmetics() {
         const url = 'https://fortnite-api.com/v2/cosmetics/br';
         const response = await (0, rxjs_1.firstValueFrom)(this.http.get(url));
-        const items = response.data.data.map(item => {
+        const items = response.data.data.map((item) => {
             var _a, _b, _c, _d, _e, _f;
             return ({
                 name: item.name,
