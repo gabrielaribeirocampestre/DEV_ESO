@@ -5,14 +5,14 @@ import { Cosmetic } from '../cosmetics/cosmetic.entity';
 @Entity()
 export class UserCosmetic {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => User, { eager: true })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Cosmetic, { eager: true })
-  cosmetic: Cosmetic;
+  cosmetic!: Cosmetic;
 
   @Column()
-  acquiredAt: Date;
+  acquiredAt!: Date;
 }

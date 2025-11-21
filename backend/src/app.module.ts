@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ormconfig } from '../ormconfig';
+import { ormconfig } from './ormconfig';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CosmeticsModule } from './cosmetics/cosmetics.module';
