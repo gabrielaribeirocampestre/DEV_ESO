@@ -11,13 +11,13 @@ export class ShopItem {
   cosmetic: Cosmetic;
 
   @Column()
-  cosmeticId: number;
+  cosmeticId?: number;
 
   @Column({ default: false })
-  featured: boolean;
+  featured?: boolean;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  price?: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date: Date; // indica a loja de qual dia é

@@ -2,14 +2,14 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateCosmeticDto {
   @IsString()
-  name: string;
+  name?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
   @IsNumber()
-  price: number;
+  price?: number;
 
   @IsString()
   @IsOptional()

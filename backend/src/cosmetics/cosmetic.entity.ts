@@ -3,17 +3,17 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class Cosmetic {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
-  name: string;
+  name?: string;
 
   @Column()
-  description: string;
+  description?: string;
 
   @Column()
-  price: number;
+  price?: number;
 
   @Column()
-  imageUrl: string;
+  imageUrl?: string;
 }

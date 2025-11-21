@@ -3,17 +3,17 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class Transaction {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
-  userId: number;
+  userId?: number;
 
   @Column()
-  cosmeticId: number;
+  cosmeticId?: number;
 
   @Column()
-  amount: number;
+  amount?: number;
 
   @Column()
-  date: Date;
+  date?: Date;
 }
