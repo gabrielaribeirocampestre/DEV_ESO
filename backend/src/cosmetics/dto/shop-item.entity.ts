@@ -1,14 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Cosmetic } from './cosmetics/cosmetic.entity';
+import { Cosmetic } from '../cosmetics/cosmetic.entity';
 
 @Entity()
 export class ShopItem {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => Cosmetic)
   @JoinColumn({ name: 'cosmeticId' })
-  cosmetic: Cosmetic;
+  cosmetic!: Cosmetic;
 
   @Column()
   cosmeticId?: number;
