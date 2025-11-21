@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SyncController = void 0;
 const common_1 = require("@nestjs/common");
@@ -32,6 +31,6 @@ __decorate([
 exports.SyncController = SyncController = __decorate([
     (0, common_1.UseGuards)(auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('sync'),
-    __metadata("design:paramtypes", [typeof (_a = typeof sync_service_1.SyncService !== "undefined" && sync_service_1.SyncService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [sync_service_1.SyncService])
 ], SyncController);
 //# sourceMappingURL=sync.controller.js.map
