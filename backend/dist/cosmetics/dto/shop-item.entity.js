@@ -12,8 +12,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShopItem = void 0;
 const typeorm_1 = require("typeorm");
-const module_1 = require();
-';;
+const cosmetic_entity_1 = require("./cosmetics/cosmetic.entity");
 let ShopItem = class ShopItem {
 };
 exports.ShopItem = ShopItem;
@@ -22,9 +21,9 @@ __decorate([
     __metadata("design:type", Number)
 ], ShopItem.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => module_1.Cosmetic),
+    (0, typeorm_1.ManyToOne)(() => cosmetic_entity_1.Cosmetic),
     (0, typeorm_1.JoinColumn)({ name: 'cosmeticId' }),
-    __metadata("design:type", typeof (_a = typeof module_1.Cosmetic !== "undefined" && module_1.Cosmetic) === "function" ? _a : Object)
+    __metadata("design:type", typeof (_a = typeof cosmetic_entity_1.Cosmetic !== "undefined" && cosmetic_entity_1.Cosmetic) === "function" ? _a : Object)
 ], ShopItem.prototype, "cosmetic", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

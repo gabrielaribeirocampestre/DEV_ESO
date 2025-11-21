@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Cosmetic } from ./cosmetics/cosmetic.entity';
+import { Cosmetic } from './cosmetics/cosmetic.entity';
 
 @Entity()
 export class ShopItem {
