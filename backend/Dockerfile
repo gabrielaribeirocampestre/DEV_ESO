@@ -1,27 +1,26 @@
-# 1️⃣ Base image
-FROM node:18-alpine
+# Usando Node 20 Alpine
+FROM node:20-alpine
 
-# 2️⃣ Define o diretório de trabalho dentro do container
+# Instala dependências necessárias para SQLite
+RUN apk add --no-cache python3 make g++ sqlite sqlite-dev
+
+# Diretório de trabalho
 WORKDIR /app
 
-# 3️⃣ Copia os arquivos de dependências
+# Copia package.json e package-lock.json
 COPY package*.json ./
 
-# 4️⃣ Instala dependências do projeto e sqlite3
-RUN npm install --legacy-peer-deps
-RUN npm install sqlite3 --save
+# Instala dependências (com peer deps legados se houver)
+RUN npm ci --legacy-peer-deps
 
-# 5️⃣ Instala Nest CLI globalmente
-RUN npm install -g @nestjs/cli
-
-# 6️⃣ Copia todo o restante do código para dentro do container
+# Copia o restante do projeto
 COPY . .
 
-# 7️⃣ Compila o projeto NestJS
+# Build do NestJS
 RUN npm run build
 
-# 8️⃣ Expõe a porta que o NestJS vai rodar
+# Expõe a porta do NestJS
 EXPOSE 3000
 
-# 9️⃣ Comando padrão ao iniciar o container
-CMD ["npm", "run", "start:prod"]
+# Comando de inicialização
+CMD ["node", "dist/main.js"]
