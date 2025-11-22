@@ -1,26 +1,26 @@
-# Usa Node 18 Alpine como base leve
+# 1️⃣ Base image
 FROM node:18-alpine
 
-# Define diretório de trabalho dentro do container
+# 2️⃣ Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia os arquivos de dependências
+# 3️⃣ Copia os arquivos de dependências
 COPY package*.json ./
 
-# Instala dependências do projeto
+# 4️⃣ Instala dependências do projeto, incluindo sqlite3
 RUN npm install --legacy-peer-deps
 
-# Instala Nest CLI globalmente (para rodar build)
+# 5️⃣ Instala Nest CLI globalmente
 RUN npm install -g @nestjs/cli
 
-# Copia todo o restante do projeto
+# 6️⃣ Copia todo o restante do código para dentro do container
 COPY . .
 
-# Executa o build do NestJS
+# 7️⃣ Compila o projeto NestJS
 RUN npm run build
 
-# Expõe a porta que o NestJS vai rodar
+# 8️⃣ Expõe a porta que o NestJS vai rodar
 EXPOSE 3000
 
-# Comando padrão ao iniciar o container
+# 9️⃣ Comando padrão ao iniciar o container
 CMD ["npm", "run", "start:prod"]
