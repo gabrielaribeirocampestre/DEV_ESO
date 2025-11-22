@@ -2,7 +2,7 @@
   "name": "cosmetics-backend",
   "version": "1.0.0",
   "description": "Fortnite Cosmetics API Backend (NestJS)",
-  "author": "Victor",
+  "author": "Gabriela",
   "license": "MIT",
   "scripts": {
     "start": "nest start",
