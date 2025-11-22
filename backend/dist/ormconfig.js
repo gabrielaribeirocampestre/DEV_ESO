@@ -6,13 +6,9 @@ const cosmetic_entity_1 = require("./cosmetics/cosmetic.entity");
 const user_cosmetic_entity_1 = require("./shop/user-cosmetic.entity");
 const transaction_entity_1 = require("./shop/transaction.entity");
 exports.ormconfig = {
-    type: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    type: 'sqlite',
+    database: process.env.DB_PATH || 'cosmetics_db.sqlite',
     entities: [user_entity_1.User, cosmetic_entity_1.Cosmetic, user_cosmetic_entity_1.UserCosmetic, transaction_entity_1.Transaction],
-    synchronize: true
+    synchronize: true,
 };
 //# sourceMappingURL=ormconfig.js.map
