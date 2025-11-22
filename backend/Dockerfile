@@ -1,26 +1,29 @@
-# Usando Node 20 Alpine
+# Imagem base Node 20 Alpine
 FROM node:20-alpine
 
-# Instala dependências necessárias para SQLite
-RUN apk add --no-cache python3 make g++ sqlite sqlite-dev
+# Dependências necessárias para build e SQLite
+RUN apk add --no-cache python3 make g++ sqlite sqlite-dev bash
 
-# Diretório de trabalho
+# Define diretório de trabalho
 WORKDIR /app
 
-# Copia package.json e package-lock.json
+# Copia arquivos de dependência
 COPY package*.json ./
 
-# Instala dependências (com peer deps legados se houver)
+# Instala dependências do Node
 RUN npm ci --legacy-peer-deps
 
-# Copia o restante do projeto
+# Copia todo o projeto
 COPY . .
 
-# Build do NestJS
-RUN npm run build
+# Garante que o binário do NestJS seja executável
+RUN chmod +x node_modules/.bin/nest
 
-# Expõe a porta do NestJS
+# Build do NestJS
+RUN npx nest build
+
+# Expõe porta padrão do NestJS
 EXPOSE 3000
 
-# Comando de inicialização
+# Comando para rodar a aplicação
 CMD ["node", "dist/main.js"]
