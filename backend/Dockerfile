@@ -7,8 +7,9 @@ WORKDIR /app
 # 3️⃣ Copia os arquivos de dependências
 COPY package*.json ./
 
-# 4️⃣ Instala dependências do projeto, incluindo sqlite3
+# 4️⃣ Instala dependências do projeto e sqlite3
 RUN npm install --legacy-peer-deps
+RUN npm install sqlite3 --save
 
 # 5️⃣ Instala Nest CLI globalmente
 RUN npm install -g @nestjs/cli
